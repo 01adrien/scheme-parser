@@ -137,15 +137,22 @@
 
 
 (define extended-char '(#\! #\$ #\% #\& #\* #\+ #\- #\. #\/ #\: #\< #\= #\> #\? #\@ #\^ #\_ #\~))
-; Read an identifier token.
+
+
 (define (read-identifier)
-  (let ((char (peek-char)))
-    (if (and (not (member char extended-char)) (not (letter? char)))
-      (error "invalid char")
-      (token-make 'identifier (string->symbol (string-downcase (read-to-whitespace '()))))
+  (define (fn read-so-far)
+    (let ((char (peek-char)))
+      (cond ((or (member char extended-char) (letter? char)) 
+                (fn (string-append read-so-far (string (char-downcase (read-char))))))
+              ((delimiter? char) 
+                (token-make 'identifier (string->symbol read-so-far)))
+              (else (error "invalid id"))
+      )
     )
   )  
+  (fn "")
 )
+
 
 
 
