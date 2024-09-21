@@ -1,0 +1,6 @@
+(character #\a)
+(character #\p)
+(character #\tab)
+(character #\space)
+(character #\o)
+(character #\newline)

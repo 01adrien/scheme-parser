@@ -1,0 +1,2 @@
+(() . #\h)
+Expected | line ["\n|\n"] after token, got: "ell"
